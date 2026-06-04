@@ -1,42 +1,49 @@
-import Section0Map from '../maps/Section0Map.jsx';
-import { section0Data } from '../../data/section0Data.js';
-
-function Section0Part({ event, index }) {
-  return (
-    <article className={`section0-part split-layout${event.reverse ? ' reverse' : ''}`}>
-      <div className="split-text section0-text">
-        <div className="chapter-num">{event.number}</div>
-        <p className="section-label red reveal">{event.label}</p>
-        <p className="section0-date reveal">{event.date}</p>
-        <h2 className="section-heading-ko reveal reveal-delay-1">{event.title}</h2>
-        <p className="section-heading-en reveal reveal-delay-1">{event.titleEn}</p>
-        <div className="divider reveal reveal-delay-2">
-          <div className="divider-line"></div>
-          <div className="divider-diamond"></div>
-          <div className="divider-line"></div>
-        </div>
-        <div className="section-body reveal reveal-delay-2">
-          {event.body.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </div>
-        <div className="pull-quote reveal reveal-delay-3">
-          <p className="pull-quote-ko">{event.quote}</p>
-        </div>
-      </div>
-      <div className="split-visual section0-visual">
-        <Section0Map event={event} index={index} />
-      </div>
-    </article>
-  );
-}
+import { backgroundEvents } from '../../data/storyMapData.js';
+import LinkedStoryMap from '../maps/LinkedStoryMap.jsx';
 
 export default function Section0() {
   return (
-    <section id="s1" className="story-section section0" data-section="2">
-      {section0Data.events.map((event, index) => (
-        <Section0Part key={event.id} event={event} index={index} />
-      ))}
+    <section id="s1" className="story-section alternating-section" data-section="2">
+      {backgroundEvents.map((event, index) => {
+        const reverse = index % 2 === 1;
+        const marker = {
+          id: event.id,
+          title: event.map.title,
+          caption: event.map.caption,
+          position: event.map.marker,
+          center: event.map.center,
+          zoom: event.map.zoom,
+          color: event.map.color,
+        };
+
+        return (
+          <article key={event.id} className={`split-layout section-part ${reverse ? 'reverse' : ''}`}>
+            <div className="split-text hanji-panel reveal">
+              <div className="chapter-num">{event.number}</div>
+              <p className="section-label red">{event.label}</p>
+              <p className="section0-date">{event.date}</p>
+              <h2 className="section-heading-ko">{event.title}</h2>
+              <p className="section-heading-en">{event.titleEn}</p>
+              <div className="divider">
+                <div className="divider-line"></div>
+                <div className="divider-diamond"></div>
+                <div className="divider-line"></div>
+              </div>
+              <div className="section-body">
+                {event.body.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+              <div className="pull-quote">
+                <p className="pull-quote-ko">{event.quote}</p>
+              </div>
+            </div>
+            <div className="split-visual section-map-visual">
+              <LinkedStoryMap center={event.map.center} zoom={event.map.zoom} markers={[marker]} activeId={event.id} />
+            </div>
+          </article>
+        );
+      })}
     </section>
   );
 }

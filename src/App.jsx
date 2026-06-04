@@ -6,7 +6,6 @@ import Section3 from './components/sections/Section3.jsx';
 import Section4 from './components/sections/Section4.jsx';
 import Section5 from './components/sections/Section5.jsx';
 import Footer from './components/sections/Footer.jsx';
-import MapPortals from './components/maps/MapPortals.jsx';
 import { usePresentationInteractions } from './hooks/usePresentationInteractions.js';
 
 export default function App() {
@@ -22,7 +21,6 @@ export default function App() {
       <Section4 />
       <Section5 />
       <Footer />
-      <MapPortals />
     </>
   );
 }
