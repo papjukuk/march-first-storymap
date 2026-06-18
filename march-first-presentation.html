@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3.1 운동 준비과정 | March First Movement</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Playfair+Display:ital,wght@0,600;1,500&family=Noto+Sans+KR:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="./styles/base.css">
+  <link rel="stylesheet" href="./styles/header.css?v=20260616-nav-dot-size">
+  <link rel="stylesheet" href="./styles/section2-map.css?v=20260616-lines-disabled">
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <script src="./scripts/section2-card.js?v=20260615-merge-first-cards" defer></script>
+  <script src="./scripts/section2-map.js?v=20260616-dark-gray-basemap" defer></script>
+  <script src="./scripts/main.js" defer></script>
+</head>
+
+<body class="lang-ko">
+  <div id="progress-bar" aria-hidden="true"></div>
+
+  <a
+    id="smart-map-shortcut"
+    href="https://map.seoul.go.kr/smgis2/short/6PLgj"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="스마트서울맵에서 보기"
+  >
+    스마트서울맵
+  </a>
+
+  <nav id="nav-dots" aria-label="Section navigation">
+    <button type="button" class="dot active" aria-label="Intro" data-target="header"></button>
+    <button type="button" class="dot" aria-label="Preparation timeline" data-target="section2"></button>
+  </nav>
+
+  <section id="header" data-section>
+    <div class="hero-texture" aria-hidden="true"></div>
+    <div class="hero-ring" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="hero-date">MARCH 1, 1919</p>
+      <h1 class="hero-title">
+        <span class="ko-text"><strong>3</strong>.<strong>1</strong>운동</span>
+        <span class="en-text">March <strong>First</strong></span>
+      </h1>
+      <p class="hero-subtitle ko-text">
+        1919년 3월 1일, 전국으로 번진 독립 만세의 시작.<br>
+        선언 이전의 준비 과정은 도시 곳곳의 장소와 사람들을 따라 이어졌다.
+      </p>
+      <p class="hero-subtitle en-text">
+        Before one declaration moved through the streets, preparation gathered quietly,
+        deliberately, and with extraordinary resolve.
+      </p>
+    </div>
+    <button type="button" class="scroll-cue" data-scroll-target="section2">Scroll</button>
+  </section>
+
+  <section id="section2" class="story-container" data-section>
+    <div class="sticky-map">
+      <div id="timeline-map" aria-label="3.1 운동 준비 과정 이동 지도"></div>
+      <div class="route-progress" aria-hidden="true">
+        <span id="route-progress-fill"></span>
+      </div>
+    </div>
+
+    <div class="story-steps" id="section2-story-steps" aria-label="3.1 운동 준비 과정 스크롤 스토리"></div>
+  </section>
+</body>
+
+</html>
