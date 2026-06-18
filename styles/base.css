@@ -1,0 +1,164 @@
+/* Common theme tokens, reset, fixed UI, and reusable interaction states. */
+:root {
+  --red: #a83228;
+  --red-deep: #5f1714;
+  --cream: #eee6d8;
+  --paper: #d8d0c2;
+  --ink: #0d0c0b;
+  --charcoal: #15120f;
+  --gold: #b8922e;
+  --muted: #81776b;
+  --line: rgba(238, 230, 216, 0.14);
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  overflow-x: hidden;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+button {
+  color: inherit;
+  font: inherit;
+}
+
+section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  box-shadow: 0 0 18px rgba(168, 50, 40, 0.85);
+}
+
+#lang-toggle {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 45;
+  display: flex;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(13, 12, 11, 0.72);
+  backdrop-filter: blur(12px);
+}
+
+#lang-toggle button {
+  min-width: 44px;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: transparent;
+  cursor: pointer;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+#lang-toggle button:first-child {
+  border-left: 0;
+}
+
+#lang-toggle button.active {
+  background: var(--red);
+  color: #fff;
+}
+
+#nav-dots {
+  position: fixed;
+  top: 50%;
+  right: 1.35rem;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transform: translateY(-50%);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(238, 230, 216, 0.5);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.dot.active,
+.dot:hover {
+  border-color: var(--red);
+  background: var(--red);
+  transform: scale(1.35);
+}
+
+.section-label {
+  color: var(--gold);
+  font-family: "Playfair Display", serif;
+  font-size: 0.78rem;
+  font-style: italic;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.ko-text {
+  display: block;
+}
+
+.en-text {
+  display: none;
+}
+
+body.lang-en .ko-text {
+  display: none;
+}
+
+body.lang-en .en-text {
+  display: block;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  #nav-dots {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  #lang-toggle {
+    top: 0.85rem;
+    right: 0.85rem;
+  }
+}
