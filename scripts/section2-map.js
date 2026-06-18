@@ -36,7 +36,7 @@ window.Section2ScrollytellingMap = (() => {
     activate(0);
   }
 
-  // 湲곕뒫: GeoJSON 留ㅼ묶
+  // 기능: GeoJSON 매칭
   function matchTimeline(features) {
     const featuresById = new Map(features.map((feature) => [String(feature.id), feature]));
     const failures = [];
@@ -84,7 +84,7 @@ window.Section2ScrollytellingMap = (() => {
     console.groupEnd();
   }
 
-  // ?붾㈃ ?⑥쐞: 移대뱶? ?⑤꼸
+  // 화면 단위: 카드와 패널
 
   // 기능: 카드 렌더링
   function renderSteps() {
@@ -137,8 +137,8 @@ window.Section2ScrollytellingMap = (() => {
           <h3>Feature ${featureId}</h3>
           <dl class="panel-meta">
             <div>
-              <dt>?곹깭</dt>
-              <dd>GeoJSON 留ㅼ묶 ?ㅽ뙣</dd>
+              <dt>상태</dt>
+              <dd>GeoJSON 매칭 실패</dd>
             </div>
           </dl>
         </aside>
@@ -149,7 +149,7 @@ window.Section2ScrollytellingMap = (() => {
     return `<div class="step-panel-stack">${panels}${missing}</div>`;
   }
 
-  // 湲곕뒫: ?ㅽ겕濡?媛먯?
+  // 기능: 스크롤 감지
   function initStepObserver() {
     const steps = [...document.querySelectorAll(".story-step")];
     const observer = new IntersectionObserver((entries) => {
@@ -168,7 +168,7 @@ window.Section2ScrollytellingMap = (() => {
     steps.forEach((step) => observer.observe(step));
   }
 
-  // 湲곕뒫: ?쒖꽦 移대뱶 ?꾪솚
+  // 기능: 활성 카드 전환
   function activate(index) {
     const item = state.matchedTimeline[index];
     if (!item || !state.map) return;
@@ -190,13 +190,13 @@ window.Section2ScrollytellingMap = (() => {
     if (routeProgress) routeProgress.style.width = `${progress}%`;
   }
 
-  // ?붾㈃ ?⑥쐞: 吏?꾩? 留덉빱
+  // 화면 단위: 지도와 마커
 
   // 기능: 지도 초기화
   function initMap(features) {
     const mapElement = document.getElementById("timeline-map");
     if (!mapElement || !window.L) {
-      setPanelError("吏???쇱씠釉뚮윭由щ? 遺덈윭?ㅼ? 紐삵뻽?듬땲?? ?ㅽ듃?뚰겕 ?곌껐 ?먮뒗 Leaflet CDN 濡쒕뱶瑜??뺤씤?섏꽭??");
+      setPanelError("지도 라이브러리를 불러오지 못했습니다. 네트워크 연결 또는 Leaflet CDN 로드를 확인하세요.");
       return false;
     }
 
@@ -207,7 +207,7 @@ window.Section2ScrollytellingMap = (() => {
       attributionControl: false
     });
 
-    // 諛곌꼍吏?? CARTO Dark Matter
+    // 배경지도: CARTO Dark Matter
     L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
       maxZoom: 19
     }).addTo(state.map);
@@ -279,7 +279,7 @@ window.Section2ScrollytellingMap = (() => {
     });
   }
 
-  // 湲곕뒫: ?쒖꽦 留덉빱 ?쒖떆
+  // 기능: 활성 마커 표시
   function setActiveMarkers(item) {
     const activeIds = new Set(item.matchedPlaces.map((place) => String(place.feature.id)));
 
@@ -288,7 +288,7 @@ window.Section2ScrollytellingMap = (() => {
     });
   }
 
-  // 湲곕뒫: 寃쎈줈 醫뚰몴 ?앹꽦
+  // 기능: 경로 좌표 생성
   function getRoutePointsThrough(index) {
     const points = [];
 
@@ -304,7 +304,7 @@ window.Section2ScrollytellingMap = (() => {
     return points;
   }
 
-  // 湲곕뒫: ?꾩옱 移대뱶??寃쎈줈 援ш컙 ?앹꽦
+  // 기능: 현재 카드의 경로 구간 생성
   function getRoutePointsForCurrentStep(index) {
     const points = [];
     const previousPoints = getRoutePointsThrough(index - 1);
@@ -325,7 +325,7 @@ window.Section2ScrollytellingMap = (() => {
     return points;
   }
 
-  // 湲곕뒫: 吏??踰붿쐞 留욎땄
+  // 기능: 지도 범위 맞춤
   function fitMapToStoryRoute() {
     const routePoints = getRoutePointsThrough(state.matchedTimeline.length - 1);
     if (!routePoints.length) return;
@@ -339,7 +339,7 @@ window.Section2ScrollytellingMap = (() => {
     });
   }
 
-  // 湲곕뒫: 留덉빱 ?꾩씠肄??앹꽦
+  // 기능: 마커 아이콘 생성
   function createMarkerIcon(active = false, label = "") {
     return L.divIcon({
       className: "",
@@ -349,21 +349,21 @@ window.Section2ScrollytellingMap = (() => {
     });
   }
 
-  // 湲곕뒫: ?ㅻ쭏?몄꽌?몃㏊ ?곌껐 ?앹뾽 ?앹꽦
+  // 기능: 스마트서울맵 연결 팝업 생성
   function createSmartSeoulPopup(feature) {
-    const title = escapeHtml(feature?.properties?.CONTENTS_NAME || "?μ냼 ?뺣낫");
+    const title = escapeHtml(feature?.properties?.CONTENTS_NAME || "장소 정보");
 
     return `
       <div class="smart-map-popup">
-        <p class="smart-map-popup-kicker">?몃? 吏??/p>
+        <p class="smart-map-popup-kicker">외부 지도</p>
         <strong>${title}</strong>
-        <p>?ㅻ쭏?몄꽌?몃㏊?먯꽌 二쇰? ?꾩튂瑜????먯꽭??蹂????덉뼱??</p>
-        <a href="${SMART_SEOUL_MAP_URL}" target="_blank" rel="noopener noreferrer">?ㅻ쭏?몄꽌?몃㏊ ?닿린</a>
+        <p>스마트서울맵에서 주변 위치를 더 자세히 볼 수 있어요.</p>
+        <a href="${SMART_SEOUL_MAP_URL}" target="_blank" rel="noopener noreferrer">스마트서울맵 열기</a>
       </div>
     `;
   }
 
-  // 湲곕뒫: 留덉빱 ?몃쾭 以묒뿉留??ㅻ쭏?몄꽌?몃㏊ ?앹뾽 ?쒖떆
+  // 기능: 마커 호버 중에만 스마트서울맵 팝업 표시
   function bindHoverPopup(marker) {
     let closeTimer = null;
 
@@ -394,7 +394,7 @@ window.Section2ScrollytellingMap = (() => {
     });
   }
 
-  // ?붾㈃ ?⑥쐞: 怨듯넻 ?좏떥
+  // 화면 단위: 공통 유틸
 
   // 기능: Leaflet 좌표 변환
   function getFeatureLatLng(feature) {
@@ -402,7 +402,7 @@ window.Section2ScrollytellingMap = (() => {
     return coordinates ? [coordinates[1], coordinates[0]] : null;
   }
 
-  // 湲곕뒫: Point 醫뚰몴 異붿텧
+  // 기능: Point 좌표 추출
   function getFeatureLngLat(feature) {
     const point = feature?.geometry?.geometries?.find((geometry) => geometry.type === "Point");
     return point?.coordinates || null;
@@ -413,12 +413,12 @@ window.Section2ScrollytellingMap = (() => {
     return LOCAL_IMAGE_BY_FEATURE_ID[String(feature?.id)] || feature?.properties?.IMG_MAIN_URL || "";
   }
 
-  // 湲곕뒫: ?곸꽭 ?ㅻ챸 ?좏깮
+  // 기능: 상세 설명 선택
   function getLongDescription(props) {
     return cleanText(props.CONTENTS_DETAIL || props.VALUE_03 || props.VALUE_04 || props.VALUE_01 || "");
   }
 
-  // 湲곕뒫: ?띿뒪???뺣━
+  // 기능: 텍스트 정리
   function cleanText(value) {
     return String(value || "")
       .replace(/\r/g, "\n")
@@ -426,7 +426,7 @@ window.Section2ScrollytellingMap = (() => {
       .trim();
   }
 
-  // 湲곕뒫: HTML 臾몄옄 ?댁뒪耳?댄봽
+  // 기능: HTML 문자 이스케이프
   function escapeHtml(value) {
     return String(value || "")
       .replace(/&/g, "&amp;")
@@ -436,13 +436,13 @@ window.Section2ScrollytellingMap = (() => {
       .replace(/'/g, "&#39;");
   }
 
-  // 湲곕뒫: 醫뚰몴 ?щ㎎
+  // 기능: 좌표 포맷
   function formatCoordinates(coordinates) {
     if (!coordinates) return "";
     return `${Number(coordinates[0]).toFixed(6)}, ${Number(coordinates[1]).toFixed(6)}`;
   }
 
-  // 湲곕뒫: ?ㅻ쪟 ?쒖떆
+  // 기능: 오류 표시
   function setPanelError(message) {
     const container = document.getElementById("section2-story-steps");
     if (!container) return;
@@ -450,7 +450,7 @@ window.Section2ScrollytellingMap = (() => {
     container.innerHTML = `
       <article class="story-step active">
         <p class="step-date">Error</p>
-        <h2>吏??濡쒕뵫 ?ㅻ쪟</h2>
+        <h2>지도 로딩 오류</h2>
         <p>${message}</p>
       </article>
     `;
